@@ -10,8 +10,8 @@ This is a multi-threaded server application written in C++. It uses a thread poo
 
 ## How to Run
 
-1. Compile the server application. '''make'''
-2. Run the server with '''make run'''
+1. Compile the server application. ```make```
+2. Run the server with ```make run```
 
 ## Code Overview
 
