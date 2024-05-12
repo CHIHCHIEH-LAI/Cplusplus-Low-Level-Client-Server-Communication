@@ -9,6 +9,8 @@ Server::Server(int port, size_t num_threads): num_threads(num_threads) {
 
     bind(server_socket, (sockaddr*)&server_address, sizeof(server_address));
     listen(server_socket, 5);
+
+    std::cout << "Server started on port " << port << " with " << num_threads << " threads." << std::endl;
 }
 
 void Server::run() {
@@ -17,11 +19,14 @@ void Server::run() {
     while (true) {
         int client_socket = accept(server_socket, nullptr, nullptr);
         thread_pool.enqueue([this, client_socket] { handle_client(client_socket); });
+        std::cout << "Accepted new client connection." << std::endl;
     }
     close(server_socket);
+    std::cout << "Server stopped." << std::endl;
 }
 
 void Server::handle_client(int client_socket) {
+    std::cout << "Handling client with socket: " << client_socket << std::endl;
     char buffer[1024];
     while (true) {
         int bytes_received = recv(client_socket, buffer, sizeof(buffer), 0);
@@ -30,6 +35,7 @@ void Server::handle_client(int client_socket) {
         }
         buffer[bytes_received] = '\0';
         std::string command(buffer);
+        std::cout << "Received command: " << command << std::endl;
 
         std::string response;
         {
@@ -47,8 +53,10 @@ void Server::handle_client(int client_socket) {
                 response = "Unknown command";
             }
         }
+        std::cout << "Sending response: " << response << std::endl;
         send(client_socket, response.c_str(), response.size(), 0);
     }
+    std::cout << "Closing client socket: " << client_socket << std::endl;
     close(client_socket);
 }
 
