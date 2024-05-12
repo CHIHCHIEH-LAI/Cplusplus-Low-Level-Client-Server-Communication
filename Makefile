@@ -21,5 +21,8 @@ $(EXEC): $(OBJS)
 %.o: %.cpp %.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
+run: $(EXEC)
+	./$(EXEC)
+
 clean:
 	rm -f $(OBJS) $(EXEC)
