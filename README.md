@@ -1,4 +1,4 @@
-# Low Level Client Server Communication
+# Low-Level Client-Server Communication
 
 This is a multi-threaded server application written in C++. It uses a thread pool to handle multiple client connections concurrently.
 
