@@ -51,3 +51,9 @@ void Server::handle_client(int client_socket) {
     }
     close(client_socket);
 }
+
+int main() {
+    Server server(8080, 4);
+    server.run();
+    return 0;
+}
