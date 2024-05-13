@@ -2,27 +2,30 @@
 CC = g++
 
 # Compiler flags
-CFLAGS = -Wall -std=c++11 -pthread
+CFLAGS = -Wall -std=c++17 -pthread -I include
 
 # Source files
-SRCS = load_balancer.cpp round_robin_strategy.cpp server.cpp thread_pool.cpp main.cpp
+SRCS = $(wildcard src/*.cpp)
 
 # Object files
-OBJS = $(SRCS:.cpp=.o)
+OBJS = $(patsubst src/%.cpp, obj/%.o, $(SRCS))
 
 # Executable name
 EXEC = main
 
 all: $(EXEC)
 
-$(EXEC): $(OBJS)
+$(EXEC): $(OBJS) main.o
 	$(CC) $(CFLAGS) -o $@ $^
 
-%.o: %.cpp %.h
+obj/%.o: src/%.cpp include/%.h
+	$(CC) $(CFLAGS) -c $< -o $@
+
+main.o: main.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
 run: $(EXEC)
 	./$(EXEC)
 
 clean:
-	rm -f $(OBJS) $(EXEC)
+	rm -f obj/*.o main.o $(EXEC)
