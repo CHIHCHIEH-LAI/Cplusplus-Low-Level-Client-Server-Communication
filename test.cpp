@@ -24,6 +24,9 @@ void client(const std::string& server_ip, int port) {
 }
 
 int main() {
-    client("127.0.0.1", 8080);
+    for(int i=0; i<10; i++) {
+        client("127.0.0.1", 8080);
+    }
+    
     return 0;
 }
