@@ -1,6 +1,6 @@
 #include "server.h"
 
-Server::Server(int port) {
+Server::Server(int port): port(port) {
 
     setup_socket(port);
 
@@ -31,7 +31,7 @@ void Server::run(size_t num_threads) {
 }
 
 void Server::handle_client(int client_socket) {
-    std::cout << "Handling client with socket: " << client_socket << std::endl;
+    std::cout << "Server " << port << " is handling client with socket: " << client_socket << std::endl;
     char buffer[1024];
     while (true) {
         int bytes_received = recv(client_socket, buffer, sizeof(buffer), 0);

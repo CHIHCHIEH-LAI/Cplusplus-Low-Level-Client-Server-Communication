@@ -20,6 +20,7 @@ public:
     void run(size_t num_threads);
     
 private:
+    int port;
     int server_socket;
     std::unordered_map<std::string, std::string> data_store;
     std::mutex data_mutex;
