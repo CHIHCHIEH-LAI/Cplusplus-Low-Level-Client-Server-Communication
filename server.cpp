@@ -59,9 +59,3 @@ void Server::handle_client(int client_socket) {
     std::cout << "Closing client socket: " << client_socket << std::endl;
     close(client_socket);
 }
-
-int main() {
-    Server server(8080, 4);
-    server.run();
-    return 0;
-}
