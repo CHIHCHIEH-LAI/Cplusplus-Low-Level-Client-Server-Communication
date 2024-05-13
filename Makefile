@@ -5,13 +5,13 @@ CC = g++
 CFLAGS = -Wall -std=c++11 -pthread
 
 # Source files
-SRCS = server.cpp thread_pool.cpp
+SRCS = load_balancer.cpp round_robin_strategy.cpp server.cpp thread_pool.cpp main.cpp
 
 # Object files
 OBJS = $(SRCS:.cpp=.o)
 
 # Executable name
-EXEC = server
+EXEC = main
 
 all: $(EXEC)
 
