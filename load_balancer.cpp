@@ -2,6 +2,13 @@
 
 LoadBalancer::LoadBalancer(int port, const std::vector<int>& server_ports, std::unique_ptr<LoadBalancerStrategy> strategy)
     : server_ports(server_ports), strategy(std::move(strategy)) {
+    
+    setup_socket(port);
+
+    std::cout << "Load Balancer started on port " << port << std::endl;
+}
+
+void LoadBalancer::setup_socket(int port) {
     balancer_socket = socket(AF_INET, SOCK_STREAM, 0);
     sockaddr_in balancer_address;
     balancer_address.sin_family = AF_INET;
@@ -10,14 +17,14 @@ LoadBalancer::LoadBalancer(int port, const std::vector<int>& server_ports, std::
 
     bind(balancer_socket, (sockaddr*)&balancer_address, sizeof(balancer_address));
     listen(balancer_socket, 5);
-
-    std::cout << "Load Balancer started on port " << port << std::endl;
 }
 
-void LoadBalancer::run() {
+void LoadBalancer::run(size_t num_threads) {
+    ThreadPool thread_pool(num_threads);
+
     while (true) {
         int client_socket = accept(balancer_socket, nullptr, nullptr);
-        handle_client(client_socket);
+        thread_pool.enqueue([this, client_socket] { handle_client(client_socket); });
         std::cout << "Accepted new client connection." << std::endl;
     }
     close(balancer_socket);

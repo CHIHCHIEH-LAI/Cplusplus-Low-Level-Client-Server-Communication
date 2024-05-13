@@ -8,18 +8,20 @@
 #include <memory>
 #include <iostream>
 
+#include "thread_pool.h"
 #include "load_balancer_strategy.h"
 
 class LoadBalancer {
 public:
     LoadBalancer(int port, const std::vector<int>& server_ports, std::unique_ptr<LoadBalancerStrategy> strategy);
-    void run();
+    void run(size_t num_threads);
 
 private:
     int balancer_socket;
     std::vector<int> server_ports;
     std::unique_ptr<LoadBalancerStrategy> strategy;
 
+    void setup_socket(int port);
     void handle_client(int client_socket);
     int get_server_socket();
 };
