@@ -21,7 +21,7 @@ The server code is divided into several parts:
 
 - `LoadBalancer::run()`: This function starts the load balancer loop. It accepts client connections and send them to the selected server for processing
 
-- `LoadBalancer::handle_client(int client_socket)`: This function is called to handle a client connection. It selects a server based on the load balancing strategy, and forwards the client request to that server.
+- `LoadBalancer::handle_client(int client_socket)`: This function is called by the thread pool to handle a client connection. It selects a server based on the load balancing strategy, and forwards the client request to that server.
 
 - `Server::Server(int port, size_t num_threads)`: This is the constructor of the `Server` class. It sets up the server socket and starts listening for connections.
 
