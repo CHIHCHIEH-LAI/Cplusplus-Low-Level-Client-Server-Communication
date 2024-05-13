@@ -1,3 +1,6 @@
+#ifndef SERVER_H
+#define SERVER_H
+
 #include <iostream>
 #include <vector>
 #include <thread>
@@ -24,3 +27,5 @@ private:
     
     void handle_client(int client_socket);
 };
+
+#endif // SERVER_H

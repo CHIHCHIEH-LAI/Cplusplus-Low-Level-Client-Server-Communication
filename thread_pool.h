@@ -1,3 +1,6 @@
+#ifndef THREADPOOL_H
+#define THREADPOOL_H
+
 #include <iostream>
 #include <vector>
 #include <thread>
@@ -24,3 +27,5 @@ private:
 
     void worker();
 };
+
+#endif // THREADPOOL_H
