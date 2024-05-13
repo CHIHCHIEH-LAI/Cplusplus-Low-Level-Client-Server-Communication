@@ -16,15 +16,15 @@
 
 class Server {
 public:
-    Server(int port, size_t num_threads);
-    void run();
+    Server(int port);
+    void run(size_t num_threads);
     
 private:
     int server_socket;
-    int num_threads;
     std::unordered_map<std::string, std::string> data_store;
     std::mutex data_mutex;
     
+    void setup_socket(int port);
     void handle_client(int client_socket);
 };
 

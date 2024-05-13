@@ -1,6 +1,13 @@
 #include "server.h"
 
-Server::Server(int port, size_t num_threads): num_threads(num_threads) {
+Server::Server(int port) {
+
+    setup_socket(port);
+
+    std::cout << "Server started on port " << port << std::endl;
+}
+
+void Server::setup_socket(int port) {
     server_socket = socket(AF_INET, SOCK_STREAM, 0);
     sockaddr_in server_address;
     server_address.sin_family = AF_INET;
@@ -9,11 +16,9 @@ Server::Server(int port, size_t num_threads): num_threads(num_threads) {
 
     bind(server_socket, (sockaddr*)&server_address, sizeof(server_address));
     listen(server_socket, 5);
-
-    std::cout << "Server started on port " << port << " with " << num_threads << " threads." << std::endl;
 }
 
-void Server::run() {
+void Server::run(size_t num_threads) {
     ThreadPool thread_pool(num_threads);
 
     while (true) {
